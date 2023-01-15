@@ -7,7 +7,7 @@ namespace Online_Tickets.Models
     public class Actor
     {
         [Key]
-        public int ActorId { get; set; }
+        public int Id { get; set; }
         [DisplayName("Profile Picture")]
         [Required(ErrorMessage = "The Profile Picture URL is required")]
         public string ProfilePictureURL { get; set; }

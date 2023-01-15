@@ -22,7 +22,7 @@ namespace Online_Tickets.Data.Services
 
         public async Task<Actor> GetById(int actorId)
         {
-            var actor = await _context.Actors.FirstOrDefaultAsync(a => a.ActorId == actorId);
+            var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == actorId);
             return actor;
         }
 
@@ -42,7 +42,7 @@ namespace Online_Tickets.Data.Services
 
         public async Task DeleteAsync(int id)
         {
-            var actor = await _context.Actors.FirstOrDefaultAsync(a => a.ActorId == id);
+            var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
             _context.Actors.Remove(actor);
             await _context.SaveChangesAsync();
         }

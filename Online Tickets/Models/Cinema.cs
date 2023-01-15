@@ -7,7 +7,7 @@ namespace Online_Tickets.Models
     public class Cinema
     {
         [Key]
-        public int CinemaId { get; set; }
+        public int Id { get; set; }
         [DisplayName("Cinema Logo")]
         public string Logo { get; set; }
         [DisplayName("Cinema Name")]

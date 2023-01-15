@@ -7,7 +7,7 @@ namespace Online_Tickets.Models
     public class Producer
     {
         [Key]
-        public int ProducerId { get; set; }
+        public int Id { get; set; }
         [DisplayName("Profile Picture")]
         public string ProfilePictureURL { get; set; }
         [DisplayName("Name")]
