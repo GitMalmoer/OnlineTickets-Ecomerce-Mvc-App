@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Online_Tickets.Data;
+using Microsoft.EntityFrameworkCore;
+using Online_Tickets.Data.Services;
 
 namespace Online_Tickets
 {
@@ -24,6 +27,8 @@ namespace Online_Tickets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+            services.AddScoped<IActorService, ActorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +57,8 @@ namespace Online_Tickets
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            AppDbInitializer.Seed(app);
         }
     }
 }
