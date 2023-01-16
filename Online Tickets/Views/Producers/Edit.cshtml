@@ -1,7 +1,7 @@
-﻿@model Actor
+﻿@model Producer
 
 @{
-    ViewData["Title"] = "Edit Actor";
+    ViewData["Title"] = "Edit Producer";
 }
 
 <div class="row text">
@@ -13,10 +13,10 @@
             <div class="col-md-8 offset-2">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    
 
-                    @*This input is passed into controller without it the model is passed to controler without ActorId*@
-                    @*<input name="ActorId" type="hidden" value="@Html.DisplayFor(m=>m.Id)" />*@
+
+                    @*This input is passed into controller without it the model is passed to controler without Id*@
+                    @*<input name="Id" type="hidden" value="@Html.DisplayFor(m=>m.Id)" />*@
 
                     <div class="form-group">
                         <label asp-for="ProfilePictureURL" class="control-label"></label>
@@ -52,7 +52,7 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var output = document.getElementById('ProfilePicturePreview');
             output.src = $("#ProfilePictureURL").val();
         });

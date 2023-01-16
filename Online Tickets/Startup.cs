@@ -29,6 +29,8 @@ namespace Online_Tickets
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
             services.AddScoped<IActorService, ActorService>();
+            services.AddScoped<IProducersService, ProducersService>();
+            services.AddScoped<ICinemasService, CinemasService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

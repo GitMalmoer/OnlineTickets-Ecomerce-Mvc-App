@@ -34,7 +34,7 @@ namespace Online_Tickets.Controllers
             {
                 return View(actor);
             }
-            await _actorService.AddActorAsync(actor);
+            await _actorService.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
 
