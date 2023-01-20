@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Online_Tickets.Data;
 using Online_Tickets.Data.Base;
 
 namespace Online_Tickets.Models

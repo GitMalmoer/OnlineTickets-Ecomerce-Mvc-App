@@ -18,7 +18,7 @@ namespace Online_Tickets.Data
                 am.MovieId
             });
 
-            modelBuilder.Entity<Actor_Movie>().HasOne(m => m.Movie).WithMany(am => am.Actors_Movies)
+            modelBuilder.Entity<Actor_Movie>().HasOne(m => m.Movie).WithMany((System.Linq.Expressions.Expression<System.Func<Movie, System.Collections.Generic.IEnumerable<Actor_Movie>>>)(am => (System.Collections.Generic.IEnumerable<Actor_Movie>)am.Actors_Movies))
                 .HasForeignKey(m => m.MovieId);
             modelBuilder.Entity<Actor_Movie>().HasOne(m => m.Actor).WithMany(am => am.Actors_Movies)
                 .HasForeignKey(m => m.ActorId);

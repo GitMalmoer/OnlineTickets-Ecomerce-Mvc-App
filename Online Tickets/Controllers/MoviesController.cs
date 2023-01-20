@@ -1,24 +1,31 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Online_Tickets.Data;
+using Online_Tickets.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Online_Tickets.Data.Services;
 
 namespace Online_Tickets.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IMoviesService _service;
 
-        public MoviesController(AppDbContext context)
+        public MoviesController(IMoviesService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            var allMovies = await _context.Movies.Include(m => m.Cinema).OrderBy(m => m.Name).ToListAsync();
+            var allMovies = await _service.GetAllAsync(n => n.Cinema);
             return View(allMovies);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var movieDetails = await _service.GetMovieByIdAsync(id);
+            return View(movieDetails);
         }
     }
 }

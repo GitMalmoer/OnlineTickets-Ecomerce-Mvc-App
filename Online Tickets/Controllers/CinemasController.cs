@@ -44,5 +44,46 @@ namespace Online_Tickets.Controllers
             await _service.AddAsync(cinema);
             return RedirectToAction("Index", "Cinemas");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var cinema = await _service.GetById(id);
+            if (cinema == null) return View("NotFound");
+
+            return View(cinema);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, Cinema cinema)
+        {
+            if (!ModelState.IsValid) return View(cinema);
+
+            if (id == cinema.Id)
+            {
+                await _service.UpdateAsync(id, cinema);
+                return RedirectToAction("Index", "Cinemas");
+            }
+
+            return View(cinema);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cinema = await _service.GetById(id);
+            if (cinema == null) return View("NotFound");
+
+            return View(cinema);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmation(int id)
+        {
+            var cinema = await _service.GetById(id);
+            if (cinema == null) return View("NotFound");
+
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
