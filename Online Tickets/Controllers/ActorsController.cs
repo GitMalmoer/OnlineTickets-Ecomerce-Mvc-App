@@ -80,14 +80,14 @@ namespace Online_Tickets.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmation(int ActorId)
+        public async Task<IActionResult> DeleteConfirmation(int Id)
         {
-            var actor = await _actorService.GetById(ActorId);
+            var actor = await _actorService.GetById(Id);
 
             if (actor == null)
                 return View("NotFound");
 
-            await _actorService.DeleteAsync(ActorId);
+            await _actorService.DeleteAsync(Id);
             return RedirectToAction(nameof(Index));
         }
     }

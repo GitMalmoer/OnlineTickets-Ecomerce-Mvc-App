@@ -94,7 +94,7 @@ namespace Online_Tickets.Data.Services
             }
 
             // remove existing actors 
-            var existingActorsDb = await _context.Actors_Movies.Where(n => n.ActorId == data.Id).ToListAsync();
+            var existingActorsDb = await _context.Actors_Movies.Where(n => n.MovieId == data.Id).ToListAsync();
              _context.Actors_Movies.RemoveRange(existingActorsDb);
 
 

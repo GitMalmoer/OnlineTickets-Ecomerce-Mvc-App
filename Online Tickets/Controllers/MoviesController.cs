@@ -24,9 +24,23 @@ namespace Online_Tickets.Controllers
             return View(allMovies);
         }
 
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _service.GetAllAsync(n => n.Cinema);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var selectedMovies = allMovies.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+                return View("Index", selectedMovies);
+            }
+
+            return View("Index", allMovies);
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             var movieDetails = await _service.GetMovieByIdAsync(id);
+            if (movieDetails == null) return View("NotFound");
             return View(movieDetails);
         }
 
@@ -60,7 +74,7 @@ namespace Online_Tickets.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var movie = await _service.GetMovieByIdAsync(id);
-            if(movie == null) return View("NotFound");
+            if (movie == null) return View("NotFound");
 
             var response = new NewMovieVM
             {
@@ -86,8 +100,9 @@ namespace Online_Tickets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id,NewMovieVM newMovieVm)
+        public async Task<IActionResult> Edit(int id, NewMovieVM newMovieVm)
         {
+            if (id != newMovieVm.Id) return View("NotFound");
 
             if (!ModelState.IsValid)
             {
