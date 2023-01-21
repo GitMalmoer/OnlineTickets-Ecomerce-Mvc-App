@@ -49,8 +49,5 @@
         </div>
     </div>
 
-    <div style="position: fixed; bottom: 25px; right: 100px; z-index: 1">
-        <a class="btn btn-outline-success" asp-action="Create"><i class="bi bi-plus-circle"></i><span style="margin-left: 5px">Add new</span></a>
-
-    </div>
+    @await Html.PartialAsync("_CreateItem", "Cinemas")
 }

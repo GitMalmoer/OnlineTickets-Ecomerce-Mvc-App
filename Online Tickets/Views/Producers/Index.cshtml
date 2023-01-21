@@ -52,9 +52,5 @@
         <a class="btn btn-outline-success" asp-controller="Producers" asp-action="Create"><i class="bi bi-plus-circle"></i><span style="margin-left: 5px">Add new</span></a>
     </div>
 
-    <div style="position: fixed; right: 25px; bottom: 25px;" class="text-white">
-            <a  asp-action="Create" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i> Add New
-            </a>
-    </div>
+    @await Html.PartialAsync("_CreateItem", "Producers")
 }

@@ -1,6 +1,8 @@
 ﻿@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 
+@model Movie
+
 @{
     ViewData["Title"] = "Movie Details";
 }
@@ -61,11 +63,13 @@
                                 @foreach (var actor in @Model.Actors_Movies)
                                 {
                                     <div class="col text-center">
-                                        <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureURL" style="max-width: 100px"><img/>
+                                        <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureURL" style="max-width: 100px"/>
                                         <br/>
                                         <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
+
                                     </div>
                                 }
+
                             </div>
                         </p>
 
