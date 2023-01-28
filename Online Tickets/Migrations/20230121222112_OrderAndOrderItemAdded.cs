@@ -2,7 +2,7 @@
 
 namespace Online_Tickets.Migrations
 {
-    public partial class OrderOrderItemAdded : Migration
+    public partial class OrderAndOrderItemAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

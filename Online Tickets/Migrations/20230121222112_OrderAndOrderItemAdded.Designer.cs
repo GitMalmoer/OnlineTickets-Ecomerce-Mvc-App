@@ -10,8 +10,8 @@ using Online_Tickets.Data;
 namespace Online_Tickets.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230121221837_Order&OrderItemAdded")]
-    partial class OrderOrderItemAdded
+    [Migration("20230121222112_OrderAndOrderItemAdded")]
+    partial class OrderAndOrderItemAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

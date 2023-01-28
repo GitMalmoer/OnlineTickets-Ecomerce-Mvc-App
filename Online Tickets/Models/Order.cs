@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Online_Tickets.Models
 {
@@ -9,5 +10,7 @@ namespace Online_Tickets.Models
 
         public string Email { get; set; }
         public string UserId { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; }
     }
 }
