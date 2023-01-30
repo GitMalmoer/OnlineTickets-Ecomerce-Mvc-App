@@ -1,12 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online_Tickets.Data;
 using Online_Tickets.Data.Services;
+using Online_Tickets.Data.Static;
 using Online_Tickets.Models;
 
 namespace Online_Tickets.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class ActorsController : Controller
     {
         private readonly IActorService _actorService;
@@ -16,6 +19,7 @@ namespace Online_Tickets.Controllers
             _actorService = actorService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var data = await _actorService.GetAllAsync();
@@ -38,6 +42,7 @@ namespace Online_Tickets.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var actor = await _actorService.GetById(id);

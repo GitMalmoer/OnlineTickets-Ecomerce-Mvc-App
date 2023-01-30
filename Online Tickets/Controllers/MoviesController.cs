@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Online_Tickets.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Online_Tickets.Data.Services;
 using Online_Tickets.Data.ViewModels;
+using Online_Tickets.Data.Static;
 
 namespace Online_Tickets.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class MoviesController : Controller
     {
         private readonly IMoviesService _service;
@@ -18,12 +21,14 @@ namespace Online_Tickets.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var allMovies = await _service.GetAllAsync(n => n.Cinema);
             return View(allMovies);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Filter(string searchString)
         {
             var allMovies = await _service.GetAllAsync(n => n.Cinema);
@@ -37,6 +42,7 @@ namespace Online_Tickets.Controllers
             return View("Index", allMovies);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var movieDetails = await _service.GetMovieByIdAsync(id);

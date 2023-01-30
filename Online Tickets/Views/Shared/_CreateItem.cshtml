@@ -1,8 +1,12 @@
-﻿@model string;
+﻿@using Online_Tickets.Data.Static
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model string;
 
-
-<div style="position: fixed; bottom: 25px; right: 100px; z-index: 1">
-    <a class="btn btn-outline-success" asp-controller="@Model" asp-action="Create">
-        <i class="bi bi-plus-circle"></i><span style="margin-left: 5px">Add new</span>
-    </a>
-</div>
+@if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+{
+    <div style="position: fixed; bottom: 25px; right: 100px; z-index: 1">
+        <a class="btn btn-outline-success" asp-controller="@Model" asp-action="Create">
+            <i class="bi bi-plus-circle"></i><span style="margin-left: 5px">Add new</span>
+        </a>
+    </div>
+}

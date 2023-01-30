@@ -1,13 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Tickets.Data;
 using Online_Tickets.Data.Services;
+using Online_Tickets.Data.Static;
 using Online_Tickets.Models;
 
 namespace Online_Tickets.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class CinemasController : Controller
     {
         private readonly ICinemasService _service;
@@ -17,12 +20,14 @@ namespace Online_Tickets.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var allCinemas = await _service.GetAllAsync();
             return View(allCinemas);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var cinema = await _service.GetById(id);

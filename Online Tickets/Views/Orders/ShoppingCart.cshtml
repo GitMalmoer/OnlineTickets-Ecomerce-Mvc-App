@@ -73,7 +73,7 @@
 
                 <script>
 
-                    let _total = @Html.Raw(Model.ShoppingCartTotal);
+                    let _total = '@Html.Raw(Model.ShoppingCartTotal)';
 
                     paypal.Button.render({
                         // configure environment

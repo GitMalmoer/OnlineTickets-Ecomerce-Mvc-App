@@ -94,6 +94,8 @@ namespace Online_Tickets.Data.Cart
                 .Where(n => n.ShoppingCartId == ShoppingCartId).ToListAsync();
             _context.ShoppingCartItems.RemoveRange(items);
 
+            ShoppingCartItems = new List<ShoppingCartItem>();
+
             await _context.SaveChangesAsync();
         }
 

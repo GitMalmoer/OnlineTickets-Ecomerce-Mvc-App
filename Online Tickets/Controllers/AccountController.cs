@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Online_Tickets.Data;
+using Online_Tickets.Data.Static;
 using Online_Tickets.Data.ViewModels;
 using Online_Tickets.Models;
 
@@ -11,14 +13,21 @@ namespace Online_Tickets.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly AppDbContext _appDbContext;
+        private readonly AppDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext appDbContext)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _appDbContext = appDbContext;
+            _context = context;
         }
+
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
+
         public IActionResult Login()
         {
             var response = new LoginVM();
@@ -28,7 +37,7 @@ namespace Online_Tickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVm)
         {
-            if(!ModelState.IsValid) return View(loginVm);
+            if (!ModelState.IsValid) return View(loginVm);
 
             var user = await _userManager.FindByEmailAsync(loginVm.EmailAddress);
 
@@ -51,6 +60,61 @@ namespace Online_Tickets.Controllers
 
             TempData["Error"] = "Wrong credentials, please try again.";
             return View(loginVm);
+        }
+
+        public IActionResult Register()
+        {
+            var response = new RegisterVM();
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM registerVm)
+        {
+            if (!ModelState.IsValid) return View(registerVm);
+
+            var user = await _userManager.FindByEmailAsync(registerVm.EmailAddress);
+
+            if (user != null)
+            {
+                TempData["Error"] = "This email address is already in use";
+                return View(registerVm);
+            }
+
+            var newUser = new ApplicationUser
+            {
+                FullName = registerVm.FullName,
+                Email = registerVm.EmailAddress,
+                UserName = registerVm.EmailAddress
+            };
+
+            var newUserResponse = await _userManager.CreateAsync(newUser,registerVm.Password);
+
+            if (newUserResponse.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+            }
+            else
+            {
+                TempData["Error"] = "Password must be secure (at least 8 letters, small and big letters and special sign)";
+                return View(registerVm);
+            }
+
+            await _signInManager.PasswordSignInAsync(newUser, registerVm.Password,false,false);
+            
+            return View("RegisterCompleted");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            return View();
         }
     }
 }

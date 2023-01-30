@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Online_Tickets.Data.Static;
 
 namespace Online_Tickets.Data.Services
 {
@@ -14,10 +15,16 @@ namespace Online_Tickets.Data.Services
         {
             _context = context;
         }
-        public async Task<List<Order>> GetOrdersByUserIdAsync(string userId)
+        public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
         {
-            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Movie)
-                .Where(n => n.UserId == userId).ToListAsync();
+            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Movie).Include(n => n.User).ToListAsync();
+
+            if(userRole != UserRoles.Admin)
+            {
+                orders = orders.Where(n => n.UserId == userId).ToList();
+            }
+            
+
             return orders;
         }
 
